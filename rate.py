@@ -1,6 +1,7 @@
 import requests
 import json
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 # 你的飞书Webhook地址（无需修改）
 FEISHU_WEBHOOK = "https://open.feishu.cn/open-apis/bot/v2/hook/4d04f305-8766-4679-a0a4-3013a7329b4b"
@@ -26,8 +27,8 @@ def get_aud_cny_rate():
 
 def generate_reminder(rate):
     """根据汇率生成分级提醒文案"""
-    # 获取当前时间（北京时间）
-    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # 获取当前时间（北京时间 UTC+8）
+    current_time = datetime.now(ZoneInfo("Asia/Shanghai")).strftime("%Y-%m-%d %H:%M:%S")
     
     # 分级判断逻辑
     if rate < 4.5:
